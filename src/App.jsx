@@ -1,38 +1,23 @@
-import { Outlet } from 'react-router-dom';
-import LeftBar from './components/leftBar/LeftBar';
-import RightBar from './components/rightBar/RightBar';
-import { useEffect, useState } from 'react';
-import TopBar from './components/topBar/TopBar';
-import "./App.css";
+import { Outlet } from "react-router-dom";
+import LeftBar from "./components/leftBar/LeftBar";
+import RightBar from "./components/rightBar/RightBar";
+import "./style.scss";
+import { useSelector } from "react-redux";
 
 function App() {
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth <= 768);
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  const theme = useSelector((state) => state.theme);
 
   return (
-    <div className="app-container">
-      {isMobile && <TopBar />}
-
-      <div className={`main-content ${isMobile ? "mobile" : ""}`}>
-        {!isMobile && <LeftBar />}
-        
-        <div className="page-content">
+    <div className={`theme-${theme.theme}`}>
+      <div style={{ display: "flex" }}>
+        <LeftBar />
+        <div style={{ flex: 6 }}>
           <Outlet />
         </div>
-        
-        {isMobile && <LeftBar />}
-        {!isMobile && <RightBar />}
+        <RightBar />
       </div>
-
-      {isMobile && <LeftBar />}
     </div>
   );
 }
 
-export default App
+export default App;

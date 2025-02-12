@@ -8,6 +8,8 @@ import Register from './pages/register/Register.jsx';
 import Home from './pages/home/Home.jsx';
 import Profile from './pages/profile/Profile.jsx';
 import ProtectedRoute from './pages/ProtectedRoute.jsx';
+import store from './store/store.js';
+import { Provider } from 'react-redux';
 
 const router = createBrowserRouter([
   {
@@ -48,6 +50,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router}> </RouterProvider>
+    <Provider store={store}>
+    <RouterProvider router={router} />
+    </Provider>
   </StrictMode>,
 )
