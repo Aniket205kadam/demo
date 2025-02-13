@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import "./PostPreview.scss";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -6,20 +6,34 @@ import {
   faEllipsis,
   faComment,
   faPaperPlane,
-  faHeart,
-  faBookmark,
+  faChevronLeft,
+  faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 import ReadMoreCaption from "./ReadMoreCaption";
 
 function PostPreview({ post }) {
-  const isFromFollowedUser = false; //post.user.username
+  const isFromFollowedUser = false;
   const [commentMsg, setCommentMsg] = useState(null);
+  const mediaRef = useRef(null);
+  const [isMuted, setIsMuted] = useState(true);
+
+  const scrollLeft = () => {
+    mediaRef.current.scrollBy({
+      left: -mediaRef.current.clientWidth,
+      behavior: "smooth",
+    });
+  };
+
+  const scrollRight = () => {
+    mediaRef.current.scrollBy({
+      left: mediaRef.current.clientWidth,
+      behavior: "smooth",
+    });
+  };
 
   const postComment = () => {
     console.log("Post: " + commentMsg);
   };
-
-  console.log("lenght: " + post.collaborators.length);
 
   return (
     <div className="post">
@@ -57,8 +71,7 @@ function PostPreview({ post }) {
                       {" "}
                       {post.collaborators.length == 1
                         ? post.collaborators[0]
-                        : post.collaborators.length}{" "}
-                      others
+                        : post.collaborators.length + " " + " others" }{" "}
                     </span>
                   </div>
                 )}
@@ -79,11 +92,51 @@ function PostPreview({ post }) {
           <FontAwesomeIcon icon={faEllipsis} />
         </div>
         <div className="content">
-          <p>{post.desc}</p>
-          <img
-            src={post.postMedia[0]?.mediaUrl}
-            alt={post.postMedia[0]?.altText}
-          />
+          {post.postMedia.length > 1 && (
+            <button className="scroll-btn left" onClick={scrollLeft}>
+              <FontAwesomeIcon icon={faChevronLeft} />
+            </button>
+          )}
+
+          <div className="media-container" ref={mediaRef}>
+            {post.postMedia.map((postMedia) =>
+              postMedia.type.startsWith("image") ? (
+                <img
+                  src={postMedia.mediaUrl}
+                  alt={postMedia.altText}
+                  key={postMedia.id}
+                />
+              ) : postMedia.type.startsWith("video") ? (
+                  <video
+                    key={postMedia.id}
+                    muted={true}
+                    onDoubleClick={(event) => {
+                      if (isMuted) {
+                        event.target.muted = false;
+                      } else {
+                        event.target.muted = true;
+                      }
+                      setIsMuted(muted => !muted);
+                    }}
+                    onClick={(event) => {
+                      if (event.target.paused) {
+                        event.target.play();
+                      } else {
+                        event.target.pause();
+                      }
+                    }}
+                  >
+                    <source src={postMedia.mediaUrl} type="video/mp4" />
+                  </video>
+              ) : null
+            )}
+          </div>
+
+          {post.postMedia.length > 1 && (
+            <button className="scroll-btn right" onClick={scrollRight}>
+              <FontAwesomeIcon icon={faChevronRight} />
+            </button>
+          )}
         </div>
         <div className="info">
           <div className="item">

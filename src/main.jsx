@@ -10,6 +10,7 @@ import Profile from './pages/profile/Profile.jsx';
 import ProtectedRoute from './pages/ProtectedRoute.jsx';
 import store from './store/store.js';
 import { Provider } from 'react-redux';
+import Reels from './components/reels/Reels.jsx';
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
       {
         path: "/:username",
         element: <Profile />
+      },
+      {
+        path: "/reels/",
+        element: <Reels />
       }
     ]
   },
