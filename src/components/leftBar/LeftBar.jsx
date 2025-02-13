@@ -18,8 +18,8 @@ import {
   faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import { faYoutube } from "@fortawesome/free-brands-svg-icons";
-import { useDispatch } from "react-redux";
-import { dark, light } from "../../store/themeSlice"
+import { useDispatch, useSelector } from "react-redux";
+import { dark, light } from "../../store/themeSlice";
 
 function LeftBar() {
   const profileUrl =
@@ -28,10 +28,11 @@ function LeftBar() {
     username: "aniket205kadam",
     email: "aniketrkadam205@gmail.com",
   };
+  const theme = useSelector(state => state.theme.theme);
   const [showPopup, setShowPopup] = useState(false);
   const popup = useRef();
-  const [isDark, setIsDark] = useState(false);
-  const [showDarkMode, setShowDarkMode] = useState(false);
+  const [isDark, setIsDark] = useState(theme === "dark" ? true : false);
+  const [showDarkMode, setShowDarkMode] = useState();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -46,6 +47,11 @@ function LeftBar() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const toggleDarkMode = () => {
+    dispatch(isDark ? light() : dark());
+    setIsDark((prev) => !prev);
+  }
 
   return (
     <div className="leftBar">
@@ -118,7 +124,9 @@ function LeftBar() {
                   </div>
                 </li>
                 <li>
-                  <div>
+                  <div style={{
+                    paddingBottom: "0"
+                  }}>
                     <FontAwesomeIcon icon={faBookmark} />
                     <span>Saved</span>
                   </div>
@@ -128,9 +136,11 @@ function LeftBar() {
                   style={{
                     cursor: "pointer",
                     padding: "10px",
+                    paddingTop: "0",
+                    margin: "0",
+                    boxSizing: "border-box",
                     listStyle: "none",
                     display: "block",
-                    backgroundColor: `${showDarkMode ? "#898c91" : null}`,
                   }}
                 >
                   <div>
@@ -160,15 +170,7 @@ function LeftBar() {
                         Dark mode
                       </span>
                       <div
-                        onClick={() => {
-                          setIsDark((value) => !value);
-
-                          if (isDark) {
-                            dispatch(dark());
-                          } else {
-                            dispatch(light());
-                          }
-                        }}
+                        onClick={toggleDarkMode}
                         style={{
                           width: "50px",
                           height: "25px",
@@ -204,7 +206,7 @@ function LeftBar() {
                   </div>
                 </li>
                 <li>
-                  <div>
+                  <div className="logout">
                     <FontAwesomeIcon icon={faRightFromBracket} />
                     <span>Logout</span>
                   </div>
