@@ -8,6 +8,8 @@ import { useRef, useState } from "react";
 import "./App.scss";
 import Search from "./pages/search/Search";
 import useClickOutside from "./hooks/useClickOutside";
+import MoreOptions from "./components/exp/MoreOptions";
+import ThemeSwitcher from "./components/exp/ThemeSwitcher";
 
 function App() {
   const location = useLocation();
@@ -16,12 +18,28 @@ function App() {
   const theme = useSelector((state) => state.theme.theme);
   const searchRef = useRef(null);
   const [showMoreOptions, setShowMoreOption] = useState(false);
+  const [showThemeSwitcher, setShowThemeSwitcher] = useState(false);
+  const moreOptionsRef = useRef(null);
+  const themeSwitcherRef = useRef(null);
+
   useClickOutside(searchRef, () => setShowSearchBox(false));
+  useClickOutside(moreOptionsRef, () => setShowMoreOption(false));
+  useClickOutside(themeSwitcherRef, () => setShowThemeSwitcher(false));
+
+  const switcherHandler = () => {
+    setShowMoreOption(false);
+    setShowThemeSwitcher(true);
+  }
+
+  const closeThemeSwitcherHandler = () => {
+    setShowThemeSwitcher(false);
+    setShowMoreOption(true);
+  }
 
   return (
     <div className={`theme-${theme}`}>
       <div className={"layout"}>
-        <LeftBar searchHandler={setShowSearchBox} isOpenSearchBox={showSearchBox} />
+        <LeftBar searchHandler={setShowSearchBox} moreHandler={setShowMoreOption} isOpenSearchBox={showSearchBox} />
         <div className={`content ${showSearchBox ? "blurred" : ""}`} style={{
           flex: showRightBar ? "5" : "8.6"
         }}>
@@ -31,6 +49,8 @@ function App() {
       </div>
 
       {showSearchBox && <Search ref={searchRef} />}
+      {showMoreOptions && <MoreOptions ref={moreOptionsRef} currTheme={theme} switcherHandler={switcherHandler} />}
+      {showThemeSwitcher && <ThemeSwitcher ref={themeSwitcherRef} closeThemeSwitcherHandler={closeThemeSwitcherHandler} />}
       {}
     </div>
   );

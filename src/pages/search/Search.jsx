@@ -8,7 +8,7 @@ import SearchLoader from "./SearchLoader";
 
 function Search({ ref }) {
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-  const recentSearchs = [
+  const recentSearchsFeak = [
     {
       id: "1234",
       profileUrl:
@@ -69,6 +69,7 @@ function Search({ ref }) {
 
   const [query, setQuery] = useState(null);
   const [startSearching, setStartSearching] = useState(false);
+  const [recentSearchs, setRecentSearchs] = useState(recentSearchsFeak);
   const [similerUsers, setSimilerUsers] = useState(null);
   const [loading, setLoading] = useState(false);
   const recentRef = useRef(null);
@@ -83,10 +84,9 @@ function Search({ ref }) {
         setStartSearching(true);
         setLoading(true);
         console.log("api call");
-        //   recentRef.current.classList.add("disabled");
         await delay(2000);
-        // setLoading(false);
-        // setSimilerUsers(result);
+        setLoading(false);
+        setSimilerUsers(result);
       }
       if (query === null || query?.length === 0) {
         setStartSearching(false);
@@ -121,7 +121,8 @@ function Search({ ref }) {
           <div className="recent" ref={recentRef}>
             <hr />
             <h2>Recent</h2>
-            {recentSearchs.map((recent) => (
+            {recentSearchs?.length === 0 && <span className="msg">No recent searches.</span>}
+            {recentSearchs?.map((recent) => (
               <div className="user-info" key={recent.username}>
                 <div className="user-profile">
                   <img

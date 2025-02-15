@@ -22,23 +22,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { dark, light } from "../../store/themeSlice";
 import { useNavigate, useLocation } from "react-router-dom";
 
-function LeftBar({ searchHandler, isOpenSearchBox }) {
+function LeftBar({ searchHandler, isOpenSearchBox , moreHandler}) {
   const profileUrl =
     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
   const currentUser = {
     username: "aniket205kadam",
     email: "aniketrkadam205@gmail.com",
   };
-  const theme = useSelector((state) => state.theme.theme);
-  const [showPopup, setShowPopup] = useState(false);
+  // const theme = useSelector((state) => state.theme.theme);
+  // const [showPopup, setShowPopup] = useState(false);
   const popup = useRef();
-  const [isDark, setIsDark] = useState(theme === "dark" ? true : false);
-  const [showDarkMode, setShowDarkMode] = useState();
-  const dispatch = useDispatch();
+  // const [isDark, setIsDark] = useState(theme === "dark" ? true : false);
+  // const [showDarkMode, setShowDarkMode] = useState();
+  // const dispatch = useDispatch();
   const navigate = useNavigate();
   const currentLocation = useLocation();
-
-  const openSearchBox = () => {};
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -52,13 +50,6 @@ function LeftBar({ searchHandler, isOpenSearchBox }) {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
-  const toggleDarkMode = () => {
-    dispatch(isDark ? light() : dark());
-    setIsDark((prev) => !prev);
-  };
-
-  console.log("Box: " + isOpenSearchBox);
 
   return (
     <div className="leftBar">
@@ -180,13 +171,13 @@ function LeftBar({ searchHandler, isOpenSearchBox }) {
           </div>
         </div>
         <hr />
-        <div className="second-menu">
+        <div className="second-menu" onClick={() => moreHandler(true)}>
           <div className="item" onClick={() => setShowPopup(true)}>
             <FontAwesomeIcon icon={faBars} />
             <span>More</span>
           </div>
         </div>
-        {showPopup && (
+        {/* {showPopup && (
           <div className="popup-overplay" ref={popup}>
             <div className="popup">
               <ul>
@@ -295,7 +286,7 @@ function LeftBar({ searchHandler, isOpenSearchBox }) {
               </ul>
             </div>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );
