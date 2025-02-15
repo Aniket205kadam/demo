@@ -11,6 +11,11 @@
     overflow-y: auto;
     background-color: themed("bg");
     color: themed("textColor");
+
+    .blurred {
+      // filter: blur(5px);
+      background-color: red;
+    }
   
     &::-webkit-scrollbar {
       display: none;

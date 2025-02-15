@@ -22,7 +22,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { dark, light } from "../../store/themeSlice";
 import { useNavigate, useLocation } from "react-router-dom";
 
-function LeftBar() {
+function LeftBar({ searchHandler, isOpenSearchBox }) {
   const profileUrl =
     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
   const currentUser = {
@@ -37,6 +37,8 @@ function LeftBar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const currentLocation = useLocation();
+
+  const openSearchBox = () => {};
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -56,6 +58,8 @@ function LeftBar() {
     setIsDark((prev) => !prev);
   };
 
+  console.log("Box: " + isOpenSearchBox);
+
   return (
     <div className="leftBar">
       <div className="container">
@@ -64,7 +68,7 @@ function LeftBar() {
         </div>
         <div className="menu">
           <div className="item" onClick={() => navigate("/")}>
-            {currentLocation.pathname === "/" ? (
+            {currentLocation.pathname === "/" && !isOpenSearchBox ? (
               <>
                 <FontAwesomeIcon icon={faHouse} size="2xl" fade />
                 <span style={{ fontWeight: "bold" }}>Home</span>
@@ -77,8 +81,8 @@ function LeftBar() {
             )}
           </div>
 
-          <div className="item">
-            {currentLocation.pathname === "/search" ? (
+          <div className="item" onClick={() => searchHandler(true)}>
+            {isOpenSearchBox ? (
               <>
                 <FontAwesomeIcon icon={faMagnifyingGlass} size="2xl" fade />
                 <span style={{ fontWeight: "bold" }}>Search</span>
@@ -92,7 +96,7 @@ function LeftBar() {
           </div>
 
           <div className="item" onClick={() => navigate("/explore")}>
-            {currentLocation.pathname === "/explore" ? (
+            {currentLocation.pathname === "/explore" && !isOpenSearchBox ? (
               <>
                 <FontAwesomeIcon icon={faCompass} size="2xl" fade />
                 <span style={{ fontWeight: "bold" }}>Explore</span>
@@ -106,7 +110,7 @@ function LeftBar() {
           </div>
 
           <div className="item" onClick={() => navigate("/reels")}>
-            {currentLocation.pathname === "/reels" ? (
+            {currentLocation.pathname === "/reels" && !isOpenSearchBox ? (
               <>
                 <FontAwesomeIcon icon={faYoutube} size="2xl" fade />
                 <span style={{ fontWeight: "bold" }}>Reels</span>
@@ -120,7 +124,7 @@ function LeftBar() {
           </div>
 
           <div className="item">
-            {currentLocation.pathname === "/direct/inbox/" ? (
+            {currentLocation.pathname === "/direct/inbox/" && !isOpenSearchBox ? (
               <>
                 <FontAwesomeIcon icon={faMessage} size="2xl" fade />
                 <span style={{ fontWeight: "bold" }}>Messages</span>
@@ -134,7 +138,7 @@ function LeftBar() {
           </div>
 
           <div className="item">
-            {currentLocation.pathname === "/notification" ? (
+            {currentLocation.pathname === "/notification" && !isOpenSearchBox ? (
               <>
                 <FontAwesomeIcon icon={faHeart} size="2xl" fade />
                 <span style={{ fontWeight: "bold" }}>Notifications</span>
@@ -148,7 +152,7 @@ function LeftBar() {
           </div>
 
           <div className="item">
-            {currentLocation.pathname === "/create/post" ? (
+            {currentLocation.pathname === "/create/post" && !isOpenSearchBox ? (
               <>
                 <FontAwesomeIcon icon={faSquarePlus} size="2xl" fade />
                 <span style={{ fontWeight: "bold" }}>Create</span>
@@ -162,7 +166,7 @@ function LeftBar() {
           </div>
 
           <div className="user">
-            {currentLocation.pathname === "/:username" ? (
+            {currentLocation.pathname === "/:username" && !isOpenSearchBox ? (
               <>
                 <img src={profileUrl} alt="Profile" />
                 <span style={{ fontWeight: "bold" }}>Profile</span>

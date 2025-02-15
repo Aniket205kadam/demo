@@ -28,27 +28,6 @@ const router = createBrowserRouter([
         path: "/",
         element: <Home />
       },
-      // {
-      //   path: "/:username",
-      //   element: <Profile />
-      // },
-      // {
-      //   path: "/reels",
-      //   element: <Reels />
-      // }, {
-      //   path: "/explore",
-      //   element: <Explore />
-      // }
-    ]
-  },
-  {
-    path: "/",
-    element: (
-      <ProtectedRoute authentication={true}>
-        <Layout />
-      </ProtectedRoute>
-    ),
-    children: [
       {
         path: "/:username",
         element: <Profile />
@@ -65,7 +44,6 @@ const router = createBrowserRouter([
         element: <Search />
       }
     ]
-
   },
   {
     path: '/login',

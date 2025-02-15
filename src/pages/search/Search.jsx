@@ -4,8 +4,9 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { useRef } from "react";
 import "./Search.scss";
+import SearchLoader from "./SearchLoader";
 
-function Search() {
+function Search({ ref }) {
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
   const recentSearchs = [
     {
@@ -69,31 +70,33 @@ function Search() {
   const [query, setQuery] = useState(null);
   const [startSearching, setStartSearching] = useState(false);
   const [similerUsers, setSimilerUsers] = useState(null);
+  const [loading, setLoading] = useState(false);
   const recentRef = useRef(null);
 
   const handleQuery = (event) => {
     setQuery(event.target.value);
   };
 
-  const wait = async () => {
-    await delay(2000);
-  }
-
   useEffect(() => {
-    if (!(query === null || query?.length === 0)) {
-      setStartSearching(true);
-      console.log("api call");
-      //   recentRef.current.classList.add("disabled");
-      wait();
-      setSimilerUsers(result);
+    async function getData() {
+      if (!(query === null || query?.length === 0)) {
+        setStartSearching(true);
+        setLoading(true);
+        console.log("api call");
+        //   recentRef.current.classList.add("disabled");
+        await delay(2000);
+        // setLoading(false);
+        // setSimilerUsers(result);
+      }
+      if (query === null || query?.length === 0) {
+        setStartSearching(false);
+      }
     }
-    if (query === null || query?.length === 0) {
-      setStartSearching(false);
-    }
+    getData();
   }, [query]);
 
   return (
-    <div className="search-page">
+    <div className="search-page" ref={ref}>
       <div className="search">
         <h1>Search</h1>
         <div className="search-bar">
@@ -103,9 +106,16 @@ function Search() {
             value={query}
             onChange={handleQuery}
           />
-          <button>
-            <FontAwesomeIcon icon={faXmark} />
-          </button>
+          {query != null && query != "" && (
+            <button>
+              <FontAwesomeIcon
+                icon={faXmark}
+                onClick={() => {
+                  setQuery("");
+                }}
+              />
+            </button>
+          )}
         </div>
         {!startSearching ? (
           <div className="recent" ref={recentRef}>
@@ -144,6 +154,7 @@ function Search() {
           </div>
         ) : (
           <div className="searched-users">
+            {loading && <SearchLoader count={10} />}
             {similerUsers?.map((user) => (
               <div className="user-info" key={user.username}>
                 <div className="user-profile">

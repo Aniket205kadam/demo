@@ -2,7 +2,7 @@ import React from "react";
 import "./RightBar.scss";
 import { Link } from "react-router-dom";
 
-function RightBar() {
+function RightBar({ isBlur }) {
   const connectedUser = {
     id: "121212",
     username: "aniket205kadam",
@@ -47,7 +47,7 @@ function RightBar() {
   ];
 
   return (
-    <div className="rightBar">
+    <div className={`rightBar ${isBlur ? "blurred" : ""}`}>
       <div className="container">
         {/* Connected User Section */}
         <div className="connected-user">
@@ -79,7 +79,7 @@ function RightBar() {
                 </Link>
                 <div>
                   <Link className="profile" to={`/${friend.user.username}/`}>
-                  <span className="username">{friend.user.username}</span>
+                    <span className="username">{friend.user.username}</span>
                   </Link>
                   <br />
                   {friend.followedBy.length > 0 && (
