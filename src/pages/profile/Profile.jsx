@@ -1,9 +1,9 @@
 import React from "react";
-import "./Profile.css";
+import "./Profile.scss";
 import { useParams } from "react-router-dom";
-import Loading from "../../components/icons/Loading";
-import PostCard from "../../components/post/PostCard";
-import More from "../../components/exp/MoreOptions";
+// import Loading from "../../components/icons/Loading";
+// import PostCard from "../../components/post/PostCard";
+// import More from "../../components/exp/MoreOptions";
 
 function Profile() {
   const { username } = useParams();
@@ -52,7 +52,7 @@ function Profile() {
       <div className="profile">Profile: {username}</div>
       {/* <Loading /> */}
       {/* <PostCard post={post} /> */}
-      <More />
+      {/* <More /> */}
     </>
   );
 }

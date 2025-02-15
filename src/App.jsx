@@ -8,8 +8,8 @@ import { useRef, useState } from "react";
 import "./App.scss";
 import Search from "./pages/search/Search";
 import useClickOutside from "./hooks/useClickOutside";
-import MoreOptions from "./components/exp/MoreOptions";
-import ThemeSwitcher from "./components/exp/ThemeSwitcher";
+import MoreOptions from "./components/popups/MoreOptions";
+import ThemeSwitcher from "./components/popups/ThemeSwitcher";
 
 function App() {
   const location = useLocation();

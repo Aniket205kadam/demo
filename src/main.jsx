@@ -1,7 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
-import "./index.css";
+import "./index.scss";
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Login from './pages/login/Login.jsx';
 import Register from './pages/register/Register.jsx';
@@ -12,7 +12,6 @@ import store from './store/store.js';
 import { Provider } from 'react-redux';
 import Reels from './components/reels/Reels.jsx';
 import Explore from './pages/explore/Explore.jsx';
-import Layout from './Layout.jsx';
 import Search from './pages/search/Search.jsx';
 
 const router = createBrowserRouter([

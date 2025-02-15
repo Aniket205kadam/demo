@@ -55,7 +55,7 @@ function LeftBar({ searchHandler, isOpenSearchBox , moreHandler}) {
     <div className="leftBar">
       <div className="container">
         <div className="app-heading">
-          <span>Streamify</span>
+        <h1 className="streamify-logo" style={{fontSize: "40px"}}>Stremify</h1>
         </div>
         <div className="menu">
           <div className="item" onClick={() => navigate("/")}>

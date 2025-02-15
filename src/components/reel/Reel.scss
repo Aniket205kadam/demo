@@ -11,7 +11,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  // background: black;
   border-radius: 15px;
   overflow: hidden;
   box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.1);
@@ -86,20 +85,18 @@
     }
   }
 
-  // Details Section (User Info & Caption)
   .details {
     position: absolute;
     bottom: 15px;
     left: 10px;
-    width: calc(100% - 20px); // Ensure it doesn't overflow
+    width: calc(100% - 20px);
     display: flex;
     flex-direction: column;
     gap: 5px;
-    background: rgba(0, 0, 0, 0.6); // Semi-transparent background
+    background: rgba(0, 0, 0, 0.6);
     padding: 8px 12px;
     border-radius: 10px;
 
-    // User Info
     .user-info {
       display: flex;
       align-items: center;
