@@ -3,8 +3,6 @@ import LeftBar from "./components/leftBar/LeftBar";
 import RightBar from "./components/rightBar/RightBar";
 import "./style.scss";
 import { useSelector } from "react-redux";
-import { useState } from "react";
-import { text } from "@fortawesome/fontawesome-svg-core";
 
 function App() {
   const theme = useSelector((state) => state.theme.theme);

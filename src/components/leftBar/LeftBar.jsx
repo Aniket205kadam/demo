@@ -20,6 +20,7 @@ import {
 import { faYoutube } from "@fortawesome/free-brands-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { dark, light } from "../../store/themeSlice";
+import { useNavigate, useLocation } from "react-router-dom";
 
 function LeftBar() {
   const profileUrl =
@@ -28,12 +29,14 @@ function LeftBar() {
     username: "aniket205kadam",
     email: "aniketrkadam205@gmail.com",
   };
-  const theme = useSelector(state => state.theme.theme);
+  const theme = useSelector((state) => state.theme.theme);
   const [showPopup, setShowPopup] = useState(false);
   const popup = useRef();
   const [isDark, setIsDark] = useState(theme === "dark" ? true : false);
   const [showDarkMode, setShowDarkMode] = useState();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const currentLocation = useLocation();
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -51,7 +54,7 @@ function LeftBar() {
   const toggleDarkMode = () => {
     dispatch(isDark ? light() : dark());
     setIsDark((prev) => !prev);
-  }
+  };
 
   return (
     <div className="leftBar">
@@ -60,44 +63,116 @@ function LeftBar() {
           <span>Streamify</span>
         </div>
         <div className="menu">
-          <div className="item">
-            <FontAwesomeIcon icon={faHouse} size="2xl" />
-            <span>Home</span>
+          <div className="item" onClick={() => navigate("/")}>
+            {currentLocation.pathname === "/" ? (
+              <>
+                <FontAwesomeIcon icon={faHouse} size="2xl" fade />
+                <span style={{ fontWeight: "bold" }}>Home</span>
+              </>
+            ) : (
+              <>
+                <FontAwesomeIcon icon={faHouse} size="2xl" />
+                <span>Home</span>
+              </>
+            )}
           </div>
 
           <div className="item">
-            <FontAwesomeIcon icon={faMagnifyingGlass} />
-            <span>Search</span>
+            {currentLocation.pathname === "/search" ? (
+              <>
+                <FontAwesomeIcon icon={faMagnifyingGlass} size="2xl" fade />
+                <span style={{ fontWeight: "bold" }}>Search</span>
+              </>
+            ) : (
+              <>
+                <FontAwesomeIcon icon={faMagnifyingGlass} size="2xl" />
+                <span>Search</span>
+              </>
+            )}
+          </div>
+
+          <div className="item" onClick={() => navigate("/explore")}>
+            {currentLocation.pathname === "/explore" ? (
+              <>
+                <FontAwesomeIcon icon={faCompass} size="2xl" fade />
+                <span style={{ fontWeight: "bold" }}>Explore</span>
+              </>
+            ) : (
+              <>
+                <FontAwesomeIcon icon={faCompass} size="2xl" />
+                <span>Explore</span>
+              </>
+            )}
+          </div>
+
+          <div className="item" onClick={() => navigate("/reels")}>
+            {currentLocation.pathname === "/reels" ? (
+              <>
+                <FontAwesomeIcon icon={faYoutube} size="2xl" fade />
+                <span style={{ fontWeight: "bold" }}>Reels</span>
+              </>
+            ) : (
+              <>
+                <FontAwesomeIcon icon={faYoutube} size="2xl" />
+                <span>Reels</span>
+              </>
+            )}
           </div>
 
           <div className="item">
-            <FontAwesomeIcon icon={faCompass} />
-            <span>Explore</span>
+            {currentLocation.pathname === "/direct/inbox/" ? (
+              <>
+                <FontAwesomeIcon icon={faMessage} size="2xl" fade />
+                <span style={{ fontWeight: "bold" }}>Messages</span>
+              </>
+            ) : (
+              <>
+                <FontAwesomeIcon icon={faMessage} size="2xl" />
+                <span>Messages</span>
+              </>
+            )}
           </div>
 
           <div className="item">
-            <FontAwesomeIcon icon={faYoutube} />
-            <span>Reels</span>
+            {currentLocation.pathname === "/notification" ? (
+              <>
+                <FontAwesomeIcon icon={faHeart} size="2xl" fade />
+                <span style={{ fontWeight: "bold" }}>Notifications</span>
+              </>
+            ) : (
+              <>
+                <FontAwesomeIcon icon={faHeart} size="2xl" />
+                <span>Notifications</span>
+              </>
+            )}
           </div>
 
           <div className="item">
-            <FontAwesomeIcon icon={faMessage} />
-            <span>Messages</span>
-          </div>
-
-          <div className="item">
-            <FontAwesomeIcon icon={faHeart} />
-            <span>Notifications</span>
-          </div>
-
-          <div className="item">
-            <FontAwesomeIcon icon={faSquarePlus} />
-            <span>Create</span>
+            {currentLocation.pathname === "/create/post" ? (
+              <>
+                <FontAwesomeIcon icon={faSquarePlus} size="2xl" fade />
+                <span style={{ fontWeight: "bold" }}>Create</span>
+              </>
+            ) : (
+              <>
+                <FontAwesomeIcon icon={faSquarePlus} size="2xl" />
+                <span>Create</span>
+              </>
+            )}
           </div>
 
           <div className="user">
-            <img src={profileUrl} alt="Profile" />
-            <span>Profile</span>
+            {currentLocation.pathname === "/:username" ? (
+              <>
+                <img src={profileUrl} alt="Profile" />
+                <span style={{ fontWeight: "bold" }}>Profile</span>
+              </>
+            ) : (
+              <>
+                <img src={profileUrl} alt="Profile" />
+                <span>Profile</span>
+              </>
+            )}
           </div>
         </div>
         <hr />
@@ -124,9 +199,11 @@ function LeftBar() {
                   </div>
                 </li>
                 <li>
-                  <div style={{
-                    paddingBottom: "0"
-                  }}>
+                  <div
+                    style={{
+                      paddingBottom: "0",
+                    }}
+                  >
                     <FontAwesomeIcon icon={faBookmark} />
                     <span>Saved</span>
                   </div>

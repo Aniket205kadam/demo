@@ -1,22 +1,19 @@
-.app-container {
+/* .app-container {
     display: flex;
     flex-direction: column;
     height: 100vh;
   }
   
-  /* Main Content Layout */
   .main-content {
     display: flex;
     flex: 1;
   }
   
-  /* Page Content (Where Outlet Renders) */
   .page-content {
     flex-grow: 1;
     padding: 20px;
   }
   
-  /* LeftBar & RightBar (Desktop View) */
   .leftBar {
     width: 250px;
     height: 100vh;
@@ -24,8 +21,7 @@
     border-right: 1px solid #dbdbdb;
   }
   
-  /* Make LeftBar a Bottom Bar on Mobile */
-  @media (max-width: 768px) {
+  /* @media (max-width: 768px) {
     .leftBar {
       width: 100%;
       height: 60px;
@@ -63,5 +59,4 @@
       margin-top: 50px;
       margin-bottom: 60px;
     }
-  }
-  
+  } */

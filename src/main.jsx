@@ -11,6 +11,9 @@ import ProtectedRoute from './pages/ProtectedRoute.jsx';
 import store from './store/store.js';
 import { Provider } from 'react-redux';
 import Reels from './components/reels/Reels.jsx';
+import Explore from './pages/explore/Explore.jsx';
+import Layout from './Layout.jsx';
+import Search from './pages/search/Search.jsx';
 
 const router = createBrowserRouter([
   {
@@ -25,15 +28,44 @@ const router = createBrowserRouter([
         path: "/",
         element: <Home />
       },
+      // {
+      //   path: "/:username",
+      //   element: <Profile />
+      // },
+      // {
+      //   path: "/reels",
+      //   element: <Reels />
+      // }, {
+      //   path: "/explore",
+      //   element: <Explore />
+      // }
+    ]
+  },
+  {
+    path: "/",
+    element: (
+      <ProtectedRoute authentication={true}>
+        <Layout />
+      </ProtectedRoute>
+    ),
+    children: [
       {
         path: "/:username",
         element: <Profile />
       },
       {
-        path: "/reels/",
+        path: "/reels",
         element: <Reels />
+      }, {
+        path: "/explore",
+        element: <Explore />
+      },
+      {
+        path: "/search",
+        element: <Search />
       }
     ]
+
   },
   {
     path: '/login',
