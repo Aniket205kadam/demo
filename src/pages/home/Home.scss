@@ -8,15 +8,14 @@
     transition: filter 0.3s ease-in-out;
   }
 
-  // Overlay that blurs the background but not the child
   .overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.3); // Semi-transparent dark overlay
-    backdrop-filter: blur(5px); // Apply blur only to the background
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
     z-index: 5;
   }
 
